@@ -95,7 +95,7 @@ export default function Dashboard() {
         <div className="p-6 border-b border-gray-100">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">d</span>
+              <span className="text-white font-sign text-sm">d</span>
             </div>
             <span className="font-sign text-xl">dressr</span>
           </Link>

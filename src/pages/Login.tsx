@@ -45,7 +45,7 @@ export default function Login() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 justify-center mb-8">
           <div className="w-10 h-10 bg-[#1a1a1a] rounded-xl flex items-center justify-center">
-            <span className="text-white font-bold text-lg">d</span>
+            <span className="text-white font-sign text-lg">d</span>
           </div>
           <span className="font-sign text-2xl">dressr</span>
         </Link>

@@ -10,7 +10,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-10 h-10 bg-[#1a1a1a] rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">d</span>
+              <span className="text-white font-sign text-lg">d</span>
             </div>
             <span className="font-sign text-2xl">dressr</span>
           </Link>
@@ -137,7 +137,7 @@ export default function LandingPage() {
         <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-4xl mx-auto">
           <div className="aspect-square rounded-2xl overflow-hidden bg-gray-100">
             <img
-              src="https://ext.same-assets.com/2206706892/3691588918.webp"
+              src="/dressr.png"
               alt="dressr demo"
               className="w-full h-full object-cover"
             />
@@ -314,7 +314,7 @@ export default function LandingPage() {
           <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">d</span>
+                <span className="text-white font-sign text-sm">d</span>
               </div>
               <span className="font-sign text-xl">dressr</span>
             </div>
