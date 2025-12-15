@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+python-jose[cryptography]
+passlib[bcrypt]
+httpx
+authlib
+pydantic-settings
+python-multipart
+google-auth
+requests
+starlette
+itsdangerous
+cloudinary
+motor
+pymongo
+
