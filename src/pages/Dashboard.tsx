@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -46,12 +45,10 @@ import {
   HelpCircle,
   MoreVertical,
   Shirt,
-  Layers,
   Wand2,
   Sliders,
   ZoomIn,
   RotateCcw,
-  Save,
 } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "@/contexts/AuthContext"

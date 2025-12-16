@@ -1,7 +1,7 @@
-# Secrets and credentials
-backend/.env
-backend/credentials/
-*.env
+# Secrets and credentials (temporarily allowing for private repo deployment)
+# backend/.env
+# backend/credentials/
+# *.env
 
 # Logs
 logs
