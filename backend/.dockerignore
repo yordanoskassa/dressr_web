@@ -10,3 +10,7 @@ README.md
 .pytest_cache
 .coverage
 .DS_Store
+.env
+docker-compose.yml
+Dockerfile
+.dockerignore
