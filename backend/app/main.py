@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from contextlib import asynccontextmanager
 from app.core.config import settings
 from app.core.database import connect_to_mongo, close_mongo_connection
@@ -15,6 +16,9 @@ async def lifespan(app: FastAPI):
     await close_mongo_connection()
 
 app = FastAPI(title="Dressr Backend", lifespan=lifespan)
+
+# Trust proxy headers (for HTTPS behind reverse proxy like EasyPanel)
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts=["*"])
 
 # Session middleware (required for OAuth)
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
