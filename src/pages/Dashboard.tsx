@@ -1,10 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
 import {
   DropdownMenu,
@@ -14,15 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
-  Home,
   Sparkles,
   Image,
-  Code2,
   Settings,
-  BarChart3,
   Upload,
-  Play,
-  Copy,
   Eye,
   RefreshCw,
   Download,
@@ -31,14 +23,6 @@ import {
   Search,
   Bell,
   ChevronDown,
-  Key,
-  FileCode,
-  Webhook,
-  Activity,
-  Clock,
-  CheckCircle2,
-  XCircle,
-  AlertCircle,
   LogOut,
   User,
   CreditCard,
@@ -57,16 +41,13 @@ const API_BASE = import.meta.env.VITE_API_URL || 'https://web.dressr.app'
 
 // Sidebar Navigation
 const sidebarItems = [
-  { icon: Home, label: "Overview", id: "overview" },
   { icon: Sparkles, label: "Studio", id: "studio" },
   { icon: Image, label: "Catalog", id: "catalog" },
-  { icon: BarChart3, label: "Analytics", id: "analytics" },
-  { icon: Code2, label: "API", id: "api" },
   { icon: Settings, label: "Settings", id: "settings" },
 ]
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState("overview")
+  const [activeTab, setActiveTab] = useState("studio")
   const [selectedGarment, setSelectedGarment] = useState<number | null>(null)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
@@ -107,7 +88,7 @@ export default function Dashboard() {
               onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                 activeTab === item.id 
-                  ? "bg-[#1a1a1a] text-white shadow-lg" 
+                  ? "bg-[#1a1a1a] text-white" 
                   : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
               }`}
             >
@@ -160,7 +141,7 @@ export default function Dashboard() {
                   <ChevronDown className="w-4 h-4 text-gray-400" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-64 shadow-xl rounded-xl border-gray-200 p-2 bg-white">
+              <DropdownMenuContent align="end" className="w-64 rounded-xl border-gray-200 p-2 bg-white">
                 <div className="px-3 py-2 mb-2">
                   <p className="font-medium text-gray-900">{user?.name || 'User'}</p>
                   <p className="text-sm text-gray-500">{user?.email}</p>
@@ -189,11 +170,8 @@ export default function Dashboard() {
 
         {/* Content Area */}
         <div className="p-8">
-          {activeTab === "overview" && <OverviewTab />}
           {activeTab === "studio" && <StudioTab selectedGarment={selectedGarment} setSelectedGarment={setSelectedGarment} />}
           {activeTab === "catalog" && <CatalogTab />}
-          {activeTab === "analytics" && <AnalyticsTab />}
-          {activeTab === "api" && <APITab />}
           {activeTab === "settings" && <SettingsTab />}
         </div>
       </main>
@@ -201,94 +179,12 @@ export default function Dashboard() {
   )
 }
 
-// Overview Tab
-function OverviewTab() {
-  const stats = [
-    { label: "Total Try-Ons", value: "32,450", change: "+12.5%", trend: "up" },
-    { label: "Conversion Rate", value: "24.8%", change: "+3.2%", trend: "up" },
-    { label: "Active Users", value: "1,284", change: "+8.1%", trend: "up" },
-    { label: "Avg. Session", value: "4m 32s", change: "-0.8%", trend: "down" },
-  ]
-
-  const recentActivity = [
-    { type: "success", message: "Try-on completed for SKU #12345", time: "2 min ago" },
-    { type: "success", message: "New garment uploaded: Summer Dress", time: "15 min ago" },
-    { type: "warning", message: "API rate limit at 80%", time: "1 hour ago" },
-    { type: "success", message: "Batch processing completed (45 items)", time: "2 hours ago" },
-    { type: "error", message: "Failed try-on: Invalid image format", time: "3 hours ago" },
-  ]
-
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-serif">Welcome back, John</h1>
-        <p className="text-gray-500 mt-1">Here's what's happening with your virtual try-on platform.</p>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-4 gap-5">
-        {stats.map((stat, i) => (
-          <div key={i} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-            <p className="text-sm text-gray-500 font-medium">{stat.label}</p>
-            <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3xl font-semibold">{stat.value}</span>
-              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${stat.trend === 'up' ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'}`}>
-                {stat.change}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-3 gap-6">
-        {/* Chart Placeholder */}
-        <div className="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold">Try-On Activity</h3>
-            <p className="text-sm text-gray-500">Daily try-ons over the last 30 days</p>
-          </div>
-          <div className="h-64 bg-gray-50 rounded-xl flex items-end justify-around p-4 gap-1">
-            {Array.from({ length: 30 }).map((_, i) => (
-              <div 
-                key={i} 
-                className="bg-[#1a1a1a] rounded-t w-full hover:bg-[#2a2a2a] transition-colors cursor-pointer"
-                style={{ height: `${Math.random() * 80 + 20}%` }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Recent Activity */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
-          <div className="space-y-3">
-            {recentActivity.map((activity, i) => (
-              <div key={i} className="flex items-start gap-3 p-2 rounded-xl hover:bg-gray-50 transition-colors">
-                {activity.type === 'success' && <div className="w-7 h-7 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0"><CheckCircle2 className="w-4 h-4 text-green-500" /></div>}
-                {activity.type === 'warning' && <div className="w-7 h-7 rounded-full bg-yellow-50 flex items-center justify-center flex-shrink-0"><AlertCircle className="w-4 h-4 text-yellow-500" /></div>}
-                {activity.type === 'error' && <div className="w-7 h-7 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0"><XCircle className="w-4 h-4 text-red-500" /></div>}
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm truncate">{activity.message}</p>
-                  <p className="text-xs text-gray-400">{activity.time}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-        <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
-        <div className="flex gap-3">
-          <Button className="gap-2 rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white"><Upload className="w-4 h-4" /> Upload Garments</Button>
-          <Button variant="outline" className="gap-2 rounded-full border-gray-200 hover:bg-gray-50"><Play className="w-4 h-4" /> Test Try-On</Button>
-          <Button variant="outline" className="gap-2 rounded-full border-gray-200 hover:bg-gray-50"><Code2 className="w-4 h-4" /> View API Docs</Button>
-          <Button variant="outline" className="gap-2 rounded-full border-gray-200 hover:bg-gray-50"><BarChart3 className="w-4 h-4" /> Export Report</Button>
-        </div>
-      </div>
-    </div>
-  )
+interface TryOnHistoryItem {
+  _id: string
+  person_image_url: string
+  garment_image_url: string
+  results: { url: string }[]
+  created_at: string
 }
 
 // Studio Tab - Comprehensive Try-On Studio
@@ -298,6 +194,25 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
   const [processing, setProcessing] = useState(false)
   const [result, setResult] = useState<{ data: string; mime_type: string; url?: string } | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [history, setHistory] = useState<TryOnHistoryItem[]>([])
+  const { user } = useAuth()
+
+  // Fetch user's try-on history
+  useEffect(() => {
+    const fetchHistory = async () => {
+      if (!user?.email) return
+      try {
+        const response = await fetch(`${API_BASE}/images/history/${encodeURIComponent(user.email)}`)
+        if (response.ok) {
+          const data = await response.json()
+          setHistory(data.history || [])
+        }
+      } catch (err) {
+        console.error('Failed to fetch history:', err)
+      }
+    }
+    fetchHistory()
+  }, [user?.email])
 
   const garments = [
     { id: 1, name: "Classic White Tee", category: "Tops", image: "https://ext.same-assets.com/2206706892/1993143932.jpeg" },
@@ -340,6 +255,9 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
       const formData = new FormData()
       formData.append('person_image', modelImage.file)
       formData.append('product_image', garmentImage.file)
+      if (user?.email) {
+        formData.append('user_id', user.email)
+      }
 
       const response = await fetch(`${API_BASE}/try-on/`, {
         method: 'POST',
@@ -363,6 +281,14 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
           mime_type: img.mime_type || 'image/jpeg',
           url: data.result_urls?.[0]
         })
+        // Refresh history after successful try-on
+        if (user?.email) {
+          const historyResponse = await fetch(`${API_BASE}/images/history/${encodeURIComponent(user.email)}`)
+          if (historyResponse.ok) {
+            const historyData = await historyResponse.json()
+            setHistory(historyData.history || [])
+          }
+        }
       } else {
         setError('No images returned from API')
       }
@@ -406,7 +332,7 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
         {/* Left Panel - Upload Images */}
         <div className="col-span-3 space-y-4">
           {/* Model Image Upload */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-5 shadow-none border border-gray-100">
             <h3 className="font-semibold mb-3">Model Image</h3>
             <div 
               className={`aspect-[3/4] rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden cursor-pointer transition-all ${
@@ -427,7 +353,7 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
           </div>
 
           {/* Garment Image Upload */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-5 shadow-none border border-gray-100">
             <h3 className="font-semibold mb-3">Garment Image</h3>
             <div 
               className={`aspect-square rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden cursor-pointer transition-all ${
@@ -448,7 +374,7 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
           </div>
 
           {/* Or Select from Catalog */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-5 shadow-none border border-gray-100">
             <h3 className="font-semibold mb-3">Or Select from Catalog</h3>
             <div className="grid grid-cols-3 gap-2">
               {garments.filter(g => g.image).map((garment) => (
@@ -478,7 +404,7 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
 
         {/* Center - Preview Canvas */}
         <div className="col-span-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-full flex flex-col">
+          <div className="bg-white rounded-2xl p-6 shadow-none border border-gray-100 h-full flex flex-col">
             <div className="flex-1 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center relative overflow-hidden min-h-[500px]">
               {result ? (
                 <img 
@@ -533,7 +459,7 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
 
         {/* Right Panel - Settings & Adjustments */}
         <div className="col-span-3 space-y-4">
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-5 shadow-none border border-gray-100">
             <h3 className="font-semibold mb-4 flex items-center gap-2">
               <Sliders className="w-4 h-4" /> Adjustments
             </h3>
@@ -574,7 +500,7 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-5 shadow-none border border-gray-100">
             <h3 className="font-semibold mb-4">Output Settings</h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -593,6 +519,34 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
           </div>
         </div>
       </div>
+
+      {/* Try-On History */}
+      {history.length > 0 && (
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold mb-4">Recent Try-Ons</h2>
+          <div className="grid grid-cols-6 gap-4">
+            {history.slice(0, 6).map((item) => (
+              <div 
+                key={item._id} 
+                className="bg-white rounded-xl border border-gray-100 overflow-hidden cursor-pointer hover:border-gray-200 transition-colors"
+                onClick={() => {
+                  if (item.results?.[0]?.url) {
+                    setResult({ data: '', mime_type: 'image/jpeg', url: item.results[0].url })
+                  }
+                }}
+              >
+                <div className="aspect-[3/4]">
+                  <img 
+                    src={item.results?.[0]?.url} 
+                    alt="Try-on result" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -638,12 +592,12 @@ function CatalogTab() {
 
       <div className="grid grid-cols-4 gap-5">
         {garments.map((garment) => (
-          <div key={garment.id} className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div key={garment.id} className="group bg-white rounded-2xl overflow-hidden shadow-none border border-gray-100 hover:border-gray-200 transition-colors">
             <div className="aspect-square bg-gray-100 relative overflow-hidden">
               <img src={garment.image} alt={garment.name} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                 <Button size="icon" className="rounded-full bg-white text-gray-900 hover:bg-gray-100"><Eye className="w-4 h-4" /></Button>
-                <Button size="icon" className="rounded-full bg-white text-gray-900 hover:bg-gray-100"><Play className="w-4 h-4" /></Button>
+                <Button size="icon" className="rounded-full bg-white text-gray-900 hover:bg-gray-100"><Wand2 className="w-4 h-4" /></Button>
                 <Button size="icon" className="rounded-full bg-white text-gray-900 hover:bg-gray-100"><Trash2 className="w-4 h-4" /></Button>
               </div>
               <span className={`absolute top-3 right-3 text-xs px-2 py-1 rounded-full font-medium ${garment.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
@@ -664,269 +618,6 @@ function CatalogTab() {
   )
 }
 
-// Analytics Tab
-function AnalyticsTab() {
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-serif">Analytics</h1>
-          <p className="text-gray-500">Track your virtual try-on performance</p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="rounded-full border-gray-200">Last 7 days</Button>
-          <Button variant="outline" className="gap-2 rounded-full border-gray-200"><Download className="w-4 h-4" /> Export</Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-4 gap-5">
-        {[
-          { label: "Total Try-Ons", value: "32,450", change: "+12.5%" },
-          { label: "Unique Users", value: "8,234", change: "+8.3%" },
-          { label: "Conversion Rate", value: "24.8%", change: "+3.2%" },
-          { label: "Avg. Processing", value: "1.2s", change: "-15%" },
-        ].map((stat, i) => (
-          <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <p className="text-sm text-gray-500">{stat.label}</p>
-            <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3xl font-semibold">{stat.value}</span>
-              <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">{stat.change}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-semibold mb-4">Try-On Trends</h3>
-          <div className="h-64 bg-gray-50 rounded-xl flex items-end justify-around p-4 gap-2">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div 
-                key={i} 
-                className="bg-[#1a1a1a] rounded-t w-full hover:bg-[#2a2a2a] transition-colors cursor-pointer"
-                style={{ height: `${Math.random() * 80 + 20}%` }}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-semibold mb-4">Top Garments</h3>
-          <div className="space-y-4">
-            {[
-              { name: "Summer Dress", tryOns: 4521, percentage: 85 },
-              { name: "Classic White Tee", tryOns: 3892, percentage: 72 },
-              { name: "Denim Jacket", tryOns: 3245, percentage: 65 },
-              { name: "Slim Fit Jeans", tryOns: 2890, percentage: 58 },
-              { name: "Blazer", tryOns: 2456, percentage: 48 },
-            ].map((item, i) => (
-              <div key={i} className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span>{item.name}</span>
-                  <span className="text-gray-400">{item.tryOns.toLocaleString()}</span>
-                </div>
-                <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#1a1a1a] rounded-full" style={{ width: `${item.percentage}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// API Tab
-function APITab() {
-  const [showKey, setShowKey] = useState(false)
-  const apiKey = "sk_live_dressr_a1b2c3d4e5f6g7h8i9j0"
-
-  const endpoints = [
-    { method: "POST", path: "/v1/try-on", desc: "Generate a virtual try-on" },
-    { method: "GET", path: "/v1/garments", desc: "List all garments" },
-    { method: "POST", path: "/v1/garments", desc: "Upload a new garment" },
-    { method: "GET", path: "/v1/garments/:id", desc: "Get garment details" },
-    { method: "DELETE", path: "/v1/garments/:id", desc: "Delete a garment" },
-    { method: "GET", path: "/v1/usage", desc: "Get API usage stats" },
-  ]
-
-  const logs = [
-    { status: 200, method: "POST", path: "/v1/try-on", time: "245ms", timestamp: "2 min ago" },
-    { status: 200, method: "GET", path: "/v1/garments", time: "89ms", timestamp: "5 min ago" },
-    { status: 201, method: "POST", path: "/v1/garments", time: "1.2s", timestamp: "12 min ago" },
-    { status: 400, method: "POST", path: "/v1/try-on", time: "45ms", timestamp: "15 min ago" },
-    { status: 200, method: "GET", path: "/v1/usage", time: "67ms", timestamp: "20 min ago" },
-  ]
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-serif">API</h1>
-          <p className="text-gray-500">Manage your API keys and view documentation</p>
-        </div>
-        <Button variant="outline" className="gap-2 rounded-full border-gray-200">
-          <FileCode className="w-4 h-4" /> View Full Docs
-        </Button>
-      </div>
-
-      <Tabs defaultValue="keys">
-        <TabsList>
-          <TabsTrigger value="keys" className="gap-2"><Key className="w-4 h-4" /> API Keys</TabsTrigger>
-          <TabsTrigger value="endpoints" className="gap-2"><Code2 className="w-4 h-4" /> Endpoints</TabsTrigger>
-          <TabsTrigger value="webhooks" className="gap-2"><Webhook className="w-4 h-4" /> Webhooks</TabsTrigger>
-          <TabsTrigger value="logs" className="gap-2"><Activity className="w-4 h-4" /> Logs</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="keys" className="space-y-4 mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Production API Key</CardTitle>
-              <CardDescription>Use this key for production requests</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-4">
-                <div className="flex-1 bg-muted rounded-lg px-4 py-3 font-mono text-sm">
-                  {showKey ? apiKey : "sk_live_dressr_••••••••••••••••"}
-                </div>
-                <Button variant="outline" size="icon" onClick={() => setShowKey(!showKey)}>
-                  <Eye className="w-4 h-4" />
-                </Button>
-                <Button variant="outline" size="icon">
-                  <Copy className="w-4 h-4" />
-                </Button>
-                <Button variant="outline" size="icon">
-                  <RefreshCw className="w-4 h-4" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Test API Key</CardTitle>
-              <CardDescription>Use this key for development and testing</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-4">
-                <div className="flex-1 bg-muted rounded-lg px-4 py-3 font-mono text-sm">
-                  sk_test_dressr_••••••••••••••••
-                </div>
-                <Button variant="outline" size="icon"><Eye className="w-4 h-4" /></Button>
-                <Button variant="outline" size="icon"><Copy className="w-4 h-4" /></Button>
-                <Button variant="outline" size="icon"><RefreshCw className="w-4 h-4" /></Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Usage This Month</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm">API Calls</span>
-                    <span className="text-sm font-medium">32,450 / 50,000</span>
-                  </div>
-                  <Progress value={65} />
-                </div>
-                <div className="grid grid-cols-3 gap-4 pt-4">
-                  <div className="text-center p-4 bg-muted rounded-lg">
-                    <p className="text-2xl font-bold">32,450</p>
-                    <p className="text-sm text-muted-foreground">Total Requests</p>
-                  </div>
-                  <div className="text-center p-4 bg-muted rounded-lg">
-                    <p className="text-2xl font-bold">245ms</p>
-                    <p className="text-sm text-muted-foreground">Avg. Latency</p>
-                  </div>
-                  <div className="text-center p-4 bg-muted rounded-lg">
-                    <p className="text-2xl font-bold">99.9%</p>
-                    <p className="text-sm text-muted-foreground">Uptime</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="endpoints" className="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Available Endpoints</CardTitle>
-              <CardDescription>Base URL: https://api.dressr.io</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {endpoints.map((endpoint, i) => (
-                  <div key={i} className="flex items-center gap-4 p-3 bg-muted/50 rounded-lg hover:bg-muted transition-colors">
-                    <Badge variant={endpoint.method === 'GET' ? 'secondary' : endpoint.method === 'POST' ? 'default' : 'destructive'} className="w-16 justify-center">
-                      {endpoint.method}
-                    </Badge>
-                    <code className="text-sm font-mono flex-1">{endpoint.path}</code>
-                    <span className="text-sm text-muted-foreground">{endpoint.desc}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="webhooks" className="mt-6">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <div>
-                <CardTitle>Webhooks</CardTitle>
-                <CardDescription>Receive real-time notifications for events</CardDescription>
-              </div>
-              <Button className="gap-2"><Plus className="w-4 h-4" /> Add Webhook</Button>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 border border-border rounded-lg">
-                  <div className="flex items-center gap-4">
-                    <div className="w-2 h-2 bg-green-500 rounded-full" />
-                    <div>
-                      <p className="font-medium">https://myapp.com/webhooks/dressr</p>
-                      <p className="text-sm text-muted-foreground">try-on.completed, garment.uploaded</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="logs" className="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent API Requests</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {logs.map((log, i) => (
-                  <div key={i} className="flex items-center gap-4 p-3 bg-muted/50 rounded-lg">
-                    <Badge variant={log.status < 300 ? 'default' : 'destructive'}>{log.status}</Badge>
-                    <Badge variant="outline">{log.method}</Badge>
-                    <code className="text-sm font-mono flex-1">{log.path}</code>
-                    <span className="text-sm text-muted-foreground">{log.time}</span>
-                    <span className="text-sm text-muted-foreground flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> {log.timestamp}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
-  )
-}
-
 // Settings Tab
 function SettingsTab() {
   return (
@@ -938,14 +629,14 @@ function SettingsTab() {
 
       <Tabs defaultValue="general">
         <TabsList className="bg-gray-100 p-1 rounded-xl">
-          <TabsTrigger value="general" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">General</TabsTrigger>
-          <TabsTrigger value="team" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Team</TabsTrigger>
-          <TabsTrigger value="billing" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Billing</TabsTrigger>
-          <TabsTrigger value="notifications" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Notifications</TabsTrigger>
+          <TabsTrigger value="general" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-none">General</TabsTrigger>
+          <TabsTrigger value="team" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-none">Team</TabsTrigger>
+          <TabsTrigger value="billing" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-none">Billing</TabsTrigger>
+          <TabsTrigger value="notifications" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-none">Notifications</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="mt-6 space-y-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-6 shadow-none border border-gray-100">
             <h3 className="text-lg font-semibold mb-4">Organization</h3>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -962,7 +653,7 @@ function SettingsTab() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-6 shadow-none border border-gray-100">
             <h3 className="text-lg font-semibold mb-1">Branding</h3>
             <p className="text-sm text-gray-500 mb-4">Customize the try-on experience for your customers</p>
             <div className="space-y-4">
@@ -998,7 +689,7 @@ function SettingsTab() {
         </TabsContent>
 
         <TabsContent value="team" className="mt-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-6 shadow-none border border-gray-100">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="text-lg font-semibold">Team Members</h3>
@@ -1033,7 +724,7 @@ function SettingsTab() {
         </TabsContent>
 
         <TabsContent value="billing" className="mt-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-6 shadow-none border border-gray-100">
             <h3 className="text-lg font-semibold mb-4">Current Plan</h3>
             <div className="flex items-center justify-between p-6 bg-gray-50 rounded-xl">
               <div>
@@ -1046,7 +737,7 @@ function SettingsTab() {
         </TabsContent>
 
         <TabsContent value="notifications" className="mt-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-6 shadow-none border border-gray-100">
             <h3 className="text-lg font-semibold mb-4">Email Notifications</h3>
             <div className="space-y-4">
               {[
