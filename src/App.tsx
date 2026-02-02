@@ -20,6 +20,8 @@ import FutureFashionPhotography from './pages/company/blog/FutureFashionPhotogra
 import ReducingReturns from './pages/company/blog/ReducingReturns'
 import LaunchingDressr from './pages/company/blog/LaunchingDressr'
 import Download from './pages/Download'
+import Privacy from './pages/legal/Privacy'
+import Terms from './pages/legal/Terms'
 
 function App() {
   return (
@@ -54,6 +56,9 @@ function App() {
           <Route path="/company/blog/future-fashion-photography" element={<FutureFashionPhotography />} />
           <Route path="/company/blog/reducing-returns" element={<ReducingReturns />} />
           <Route path="/company/blog/launching-dressr" element={<LaunchingDressr />} />
+          {/* Legal */}
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </Router>
     </AuthProvider>

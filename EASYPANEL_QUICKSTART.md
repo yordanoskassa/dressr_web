@@ -6,7 +6,7 @@
 
 1. **Create App** in Easypanel → "From Source"
 2. **Settings**:
-   - Name: `dressr-backend`
+   - Name:backend `dressr-`
    - Build Path: `/backend`
    - Dockerfile: `/backend/Dockerfile`
    - Port: `8000`

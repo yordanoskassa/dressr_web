@@ -30,3 +30,4 @@ dist-ssr
 .env
 backend/.env
 backend/credentials/
+backend/.env
