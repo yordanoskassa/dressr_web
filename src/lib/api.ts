@@ -108,10 +108,10 @@ class ApiClient {
   // Try-on endpoints
   async tryOn(modelImage: File, garmentImage: File): Promise<{ result_url: string }> {
     const formData = new FormData();
-    formData.append('model_image', modelImage);
-    formData.append('garment_image', garmentImage);
+    formData.append('person_image', modelImage);
+    formData.append('product_image', garmentImage);
 
-    const response = await fetch(`${API_BASE}/try-on/generate`, {
+    const response = await fetch(`${API_BASE}/try-on/`, {
       method: 'POST',
       headers: this.token ? { Authorization: `Bearer ${this.token}` } : {},
       body: formData,
