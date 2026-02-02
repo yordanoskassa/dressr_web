@@ -14,9 +14,13 @@ class Settings(BaseSettings):
     GOOGLE_CLOUD_PROJECT: str = ""
     GOOGLE_CLOUD_REGION: str = "us-central1"
     GOOGLE_APPLICATION_CREDENTIALS: str = "credentials/service_account.json"
+    GOOGLE_CREDENTIALS_JSON: str = ""  # JSON string of service account credentials
     
     # Frontend
     FRONTEND_URL: str = "http://localhost:5173"
+    
+    # Environment
+    ENVIRONMENT: str = "development"  # "development" or "production"
     
     # Cloudinary
     CLOUDINARY_API_KEY: str = ""

@@ -1,25 +1,38 @@
 import base64
 import os
+import json
+import tempfile
 import httpx
-from google.auth import default
+from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 from app.core.config import settings
 from fastapi import HTTPException
 from typing import Optional
 from app.services import cloudinary_service, image_service
 
-# Ensure credentials are set for google.auth
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = settings.GOOGLE_APPLICATION_CREDENTIALS
-
 def get_access_token() -> str:
-    """Get Google Cloud access token using Application Default Credentials."""
+    """Get Google Cloud access token using service account credentials."""
     try:
-        credentials, _ = default(scopes=["https://www.googleapis.com/auth/cloud-platform"])
+        # Try JSON string from env first (for production/Docker)
+        if settings.GOOGLE_CREDENTIALS_JSON:
+            creds_dict = json.loads(settings.GOOGLE_CREDENTIALS_JSON)
+            credentials = service_account.Credentials.from_service_account_info(
+                creds_dict,
+                scopes=["https://www.googleapis.com/auth/cloud-platform"]
+            )
+        # Fall back to file path (for local development)
+        elif os.path.exists(settings.GOOGLE_APPLICATION_CREDENTIALS):
+            credentials = service_account.Credentials.from_service_account_file(
+                settings.GOOGLE_APPLICATION_CREDENTIALS,
+                scopes=["https://www.googleapis.com/auth/cloud-platform"]
+            )
+        else:
+            raise Exception("No Google credentials found. Set GOOGLE_CREDENTIALS_JSON or GOOGLE_APPLICATION_CREDENTIALS")
+        
         credentials.refresh(Request())
         return credentials.token
     except Exception as e:
-         # Fallback or error logging could go here
-         raise Exception(f"Failed to obtain Google Cloud Credentials: {e}")
+        raise Exception(f"Failed to obtain Google Cloud Credentials: {e}")
 
 def encode_image_to_base64(image_bytes: bytes) -> str:
     """Encode image bytes to base64 string."""

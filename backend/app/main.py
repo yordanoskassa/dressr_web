@@ -21,12 +21,13 @@ app = FastAPI(title="Dressr Backend", lifespan=lifespan)
 app.add_middleware(ProxyHeadersMiddleware, trusted_hosts=["*"])
 
 # Session middleware (required for OAuth)
-# same_site="none" and https_only=True are required for OAuth to work across domains
+# same_site="none" and https_only=True are required for OAuth to work across domains in production
+is_production = settings.ENVIRONMENT == "production"
 app.add_middleware(
     SessionMiddleware,
     secret_key=settings.SECRET_KEY,
-    same_site="none",
-    https_only=True
+    same_site="none" if is_production else "lax",
+    https_only=is_production
 )
 
 # CORS

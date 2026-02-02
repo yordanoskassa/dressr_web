@@ -82,5 +82,6 @@ async def auth_via_google(request: Request):
         # Redirect to frontend with token and user info
         import urllib.parse
         user_data = urllib.parse.quote(f"{user.get('name', '')}|{user.get('email', '')}|{user.get('picture', '')}")
-        return RedirectResponse(url=f"{settings.FRONTEND_URL}/auth/callback?token={access_token}&user={user_data}")
+        frontend_url = settings.FRONTEND_URL.rstrip('/')
+        return RedirectResponse(url=f"{frontend_url}/auth/callback?token={access_token}&user={user_data}")
     raise HTTPException(status_code=400, detail="Google Auth failed")
