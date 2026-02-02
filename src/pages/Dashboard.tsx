@@ -53,6 +53,8 @@ import {
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "@/contexts/AuthContext"
 
+const API_BASE = import.meta.env.VITE_API_URL || 'https://web.dressr.app'
+
 // Sidebar Navigation
 const sidebarItems = [
   { icon: Home, label: "Overview", id: "overview" },
@@ -339,7 +341,7 @@ function StudioTab({ selectedGarment, setSelectedGarment }: { selectedGarment: n
       formData.append('person_image', modelImage.file)
       formData.append('product_image', garmentImage.file)
 
-      const response = await fetch('/api/try-on/', {
+      const response = await fetch(`${API_BASE}/try-on/`, {
         method: 'POST',
         body: formData,
       })
