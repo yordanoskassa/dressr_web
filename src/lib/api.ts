@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_URL || 'https://web.dressr.app';
+// API Base URL - defaults to production backend
+const API_BASE = 'https://web.dressr.app';
 
 interface AuthResponse {
   access_token: string;
