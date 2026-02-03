@@ -31,34 +31,22 @@ import {
   Sliders,
   ZoomIn,
   RotateCcw,
-  Layers,
   FolderOpen,
-  Palette,
-  Users,
-  Camera,
-  Eraser,
-  Check,
-  Zap,
 } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "@/contexts/AuthContext"
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://web.dressr.app'
 
-// Sidebar Navigation - Reorganized for catalog generation focus
+// Sidebar Navigation - Only functional features
 const sidebarItems = [
-  { icon: Zap, label: "Quick Create", id: "quick-create" },
-  { icon: Camera, label: "AI Photoshoot", id: "photoshoot" },
-  { icon: Users, label: "Virtual Models", id: "models" },
-  { icon: Eraser, label: "Background", id: "background" },
-  { icon: Layers, label: "Batch Edit", id: "batch" },
-  { icon: FolderOpen, label: "Assets", id: "assets" },
-  { icon: Palette, label: "Brand Kit", id: "brand" },
+  { icon: Wand2, label: "Try-On Studio", id: "studio" },
+  { icon: FolderOpen, label: "Catalog", id: "catalog" },
   { icon: Settings, label: "Settings", id: "settings" },
 ]
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState("quick-create")
+  const [activeTab, setActiveTab] = useState("studio")
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -180,13 +168,8 @@ export default function Dashboard() {
 
         {/* Content Area */}
         <div className="p-8">
-          {activeTab === "quick-create" && <QuickCreateTab />}
-          {activeTab === "photoshoot" && <PhotoshootTab />}
-          {activeTab === "models" && <VirtualModelsTab />}
-          {activeTab === "background" && <BackgroundTab />}
-          {activeTab === "batch" && <BatchEditTab />}
-          {activeTab === "assets" && <AssetsTab />}
-          {activeTab === "brand" && <BrandKitTab />}
+          {activeTab === "studio" && <StudioTab />}
+          {activeTab === "catalog" && <CatalogTab />}
           {activeTab === "settings" && <SettingsTab />}
         </div>
       </main>
@@ -202,86 +185,8 @@ interface TryOnHistoryItem {
   created_at: string
 }
 
-// Quick Create Tab - Fast workflow for common tasks
-function QuickCreateTab() {
-  const quickActions = [
-    { icon: Camera, title: "AI Photoshoot", desc: "Generate lifestyle product shots", color: "bg-purple-500" },
-    { icon: Users, title: "Add Model", desc: "Put garments on virtual models", color: "bg-blue-500" },
-    { icon: Eraser, title: "Remove Background", desc: "Clean product backgrounds", color: "bg-green-500" },
-    { icon: Layers, title: "Batch Process", desc: "Edit multiple images at once", color: "bg-orange-500" },
-  ]
-
-  const recentProjects = [
-    { name: "Summer Collection", images: 24, updated: "2 hours ago" },
-    { name: "Fall Lookbook", images: 18, updated: "Yesterday" },
-    { name: "Product Shots", images: 56, updated: "3 days ago" },
-  ]
-
-  return (
-    <div className="space-y-8">
-      {/* Welcome Header */}
-      <div>
-        <h1 className="text-3xl font-serif mb-2">Welcome back</h1>
-        <p className="text-gray-500">Create stunning product visuals in seconds</p>
-      </div>
-
-      {/* Quick Actions Grid */}
-      <div className="grid grid-cols-4 gap-4">
-        {quickActions.map((action, i) => (
-          <button
-            key={i}
-            className="group bg-white rounded-2xl p-6 border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all text-left"
-          >
-            <div className={`w-12 h-12 ${action.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-              <action.icon className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="font-semibold mb-1">{action.title}</h3>
-            <p className="text-sm text-gray-500">{action.desc}</p>
-          </button>
-        ))}
-      </div>
-
-      {/* Upload Zone */}
-      <div className="bg-white rounded-2xl border-2 border-dashed border-gray-200 p-12 text-center hover:border-gray-300 transition-colors cursor-pointer">
-        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <Upload className="w-8 h-8 text-gray-400" />
-        </div>
-        <h3 className="font-semibold mb-2">Drop your product images here</h3>
-        <p className="text-sm text-gray-500 mb-4">or click to browse • PNG, JPG up to 50MB</p>
-        <Button className="rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white">
-          <Plus className="w-4 h-4 mr-2" /> Upload Images
-        </Button>
-      </div>
-
-      {/* Recent Projects */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">Recent Projects</h2>
-          <Button variant="ghost" className="text-sm text-gray-500 hover:text-gray-900">View all</Button>
-        </div>
-        <div className="grid grid-cols-3 gap-4">
-          {recentProjects.map((project, i) => (
-            <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 hover:border-gray-200 transition-colors cursor-pointer">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
-                  <FolderOpen className="w-5 h-5 text-gray-500" />
-                </div>
-                <div>
-                  <h3 className="font-medium">{project.name}</h3>
-                  <p className="text-xs text-gray-400">{project.images} images</p>
-                </div>
-              </div>
-              <p className="text-xs text-gray-400">Updated {project.updated}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// AI Photoshoot Tab - Generate lifestyle product shots
-function PhotoshootTab() {
+// Studio Tab - Virtual Try-On
+function StudioTab() {
   const [modelImage, setModelImage] = useState<{ file: File; preview: string } | null>(null)
   const [garmentImage, setGarmentImage] = useState<{ file: File; preview: string } | null>(null)
   const [processing, setProcessing] = useState(false)
@@ -289,7 +194,36 @@ function PhotoshootTab() {
   const [error, setError] = useState<string | null>(null)
   const [history, setHistory] = useState<TryOnHistoryItem[]>([])
   const [selectedGarment, setSelectedGarment] = useState<number | null>(null)
+  const [dragOver, setDragOver] = useState<'model' | 'garment' | null>(null)
+  const [success, setSuccess] = useState(false)
   const { user } = useAuth()
+
+  // Handle drag and drop for images
+  const handleDrop = (e: React.DragEvent, type: 'model' | 'garment') => {
+    e.preventDefault()
+    setDragOver(null)
+    const file = e.dataTransfer.files?.[0]
+    if (file && file.type.startsWith('image/')) {
+      const imageData = { file, preview: URL.createObjectURL(file) }
+      if (type === 'model') {
+        setModelImage(imageData)
+      } else {
+        setGarmentImage(imageData)
+        setSelectedGarment(null)
+      }
+      setResult(null)
+      setError(null)
+    }
+  }
+
+  const handleDragOver = (e: React.DragEvent, type: 'model' | 'garment') => {
+    e.preventDefault()
+    setDragOver(type)
+  }
+
+  const handleDragLeave = () => {
+    setDragOver(null)
+  }
 
   // Fetch user's try-on history
   useEffect(() => {
@@ -344,6 +278,7 @@ function PhotoshootTab() {
     setProcessing(true)
     setError(null)
     setResult(null)
+    setSuccess(false)
 
     try {
       const formData = new FormData()
@@ -375,6 +310,7 @@ function PhotoshootTab() {
           mime_type: img.mime_type || 'image/jpeg',
           url: data.result_urls?.[0]
         })
+        setSuccess(true)
         // Refresh history after successful try-on
         if (user?.email) {
           const historyResponse = await fetch(`${API_BASE}/images/history/${encodeURIComponent(user.email)}`)
@@ -417,8 +353,16 @@ function PhotoshootTab() {
       </div>
 
       {error && (
-        <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm">
-          {error}
+        <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm flex items-center justify-between">
+          <span>{error}</span>
+          <button onClick={() => setError(null)} className="text-red-400 hover:text-red-600">×</button>
+        </div>
+      )}
+
+      {success && (
+        <div className="bg-green-50 text-green-600 p-4 rounded-xl text-sm flex items-center justify-between">
+          <span>Try-on generated successfully! Click Export to download.</span>
+          <button onClick={() => setSuccess(false)} className="text-green-400 hover:text-green-600">×</button>
         </div>
       )}
 
@@ -427,19 +371,34 @@ function PhotoshootTab() {
         <div className="col-span-3 space-y-4">
           {/* Model Image Upload */}
           <div className="bg-white rounded-2xl p-5 shadow-none border border-gray-100">
-            <h3 className="font-semibold mb-3">Model Image</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold">Model Image</h3>
+              {modelImage && (
+                <button 
+                  onClick={(e) => { e.stopPropagation(); setModelImage(null); setResult(null); }}
+                  className="text-xs text-gray-400 hover:text-red-500 transition-colors"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
             <div 
               className={`aspect-[3/4] rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden cursor-pointer transition-all ${
+                dragOver === 'model' ? 'border-blue-400 bg-blue-50 scale-[1.02]' :
                 modelImage ? 'border-green-300 bg-green-50' : 'border-gray-200 bg-gray-50 hover:border-gray-300'
               }`}
               onClick={() => document.getElementById('model-upload')?.click()}
+              onDrop={(e) => handleDrop(e, 'model')}
+              onDragOver={(e) => handleDragOver(e, 'model')}
+              onDragLeave={handleDragLeave}
             >
               {modelImage ? (
                 <img src={modelImage.preview} alt="Model" className="w-full h-full object-cover" />
               ) : (
                 <div className="text-center p-4">
                   <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                  <p className="text-sm text-gray-500">Upload person photo</p>
+                  <p className="text-sm text-gray-500">Drop or click to upload</p>
+                  <p className="text-xs text-gray-400 mt-1">Person photo</p>
                 </div>
               )}
             </div>
@@ -448,19 +407,34 @@ function PhotoshootTab() {
 
           {/* Garment Image Upload */}
           <div className="bg-white rounded-2xl p-5 shadow-none border border-gray-100">
-            <h3 className="font-semibold mb-3">Garment Image</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold">Garment Image</h3>
+              {garmentImage && (
+                <button 
+                  onClick={(e) => { e.stopPropagation(); setGarmentImage(null); setSelectedGarment(null); setResult(null); }}
+                  className="text-xs text-gray-400 hover:text-red-500 transition-colors"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
             <div 
               className={`aspect-square rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden cursor-pointer transition-all ${
+                dragOver === 'garment' ? 'border-blue-400 bg-blue-50 scale-[1.02]' :
                 garmentImage ? 'border-green-300 bg-green-50' : 'border-gray-200 bg-gray-50 hover:border-gray-300'
               }`}
               onClick={() => document.getElementById('garment-upload')?.click()}
+              onDrop={(e) => handleDrop(e, 'garment')}
+              onDragOver={(e) => handleDragOver(e, 'garment')}
+              onDragLeave={handleDragLeave}
             >
               {garmentImage ? (
                 <img src={garmentImage.preview} alt="Garment" className="w-full h-full object-cover" />
               ) : (
                 <div className="text-center p-4">
                   <Shirt className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                  <p className="text-sm text-gray-500">Upload clothing item</p>
+                  <p className="text-sm text-gray-500">Drop or click to upload</p>
+                  <p className="text-xs text-gray-400 mt-1">Clothing item</p>
                 </div>
               )}
             </div>
@@ -617,24 +591,35 @@ function PhotoshootTab() {
       {/* Try-On History */}
       {history.length > 0 && (
         <div className="mt-8">
-          <h2 className="text-lg font-semibold mb-4">Recent Try-Ons</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold">Recent Try-Ons</h2>
+            <span className="text-sm text-gray-400">{history.length} total</span>
+          </div>
           <div className="grid grid-cols-6 gap-4">
             {history.slice(0, 6).map((item) => (
               <div 
                 key={item._id} 
-                className="bg-white rounded-xl border border-gray-100 overflow-hidden cursor-pointer hover:border-gray-200 transition-colors"
+                className="group bg-white rounded-xl border border-gray-100 overflow-hidden cursor-pointer hover:border-gray-300 hover:shadow-md transition-all"
                 onClick={() => {
                   if (item.results?.[0]?.url) {
                     setResult({ data: '', mime_type: 'image/jpeg', url: item.results[0].url })
                   }
                 }}
               >
-                <div className="aspect-[3/4]">
+                <div className="aspect-[3/4] relative">
                   <img 
                     src={item.results?.[0]?.url} 
                     alt="Try-on result" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                   />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                    <Eye className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </div>
+                <div className="p-2 text-center">
+                  <p className="text-xs text-gray-400">
+                    {new Date(item.created_at).toLocaleDateString()}
+                  </p>
                 </div>
               </div>
             ))}
@@ -645,219 +630,8 @@ function PhotoshootTab() {
   )
 }
 
-// Virtual Models Tab
-function VirtualModelsTab() {
-  const models = [
-    { id: 1, name: "Sofia", ethnicity: "Hispanic", bodyType: "Athletic", image: "https://ext.same-assets.com/2206706892/1993143932.jpeg" },
-    { id: 2, name: "Aisha", ethnicity: "African", bodyType: "Curvy", image: "https://ext.same-assets.com/2206706892/2095848760.jpeg" },
-    { id: 3, name: "Emma", ethnicity: "Caucasian", bodyType: "Slim", image: "https://ext.same-assets.com/2206706892/2840946787.jpeg" },
-    { id: 4, name: "Mei", ethnicity: "Asian", bodyType: "Petite", image: "https://ext.same-assets.com/2206706892/3497204393.jpeg" },
-    { id: 5, name: "Priya", ethnicity: "South Asian", bodyType: "Average", image: "https://ext.same-assets.com/2206706892/1753995726.jpeg" },
-    { id: 6, name: "Zara", ethnicity: "Middle Eastern", bodyType: "Tall", image: "https://ext.same-assets.com/2206706892/1882702108.jpeg" },
-  ]
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-serif">Virtual Models</h1>
-          <p className="text-gray-500">Choose diverse AI models for your product photography</p>
-        </div>
-        <Button className="gap-2 rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white">
-          <Plus className="w-4 h-4" /> Create Custom Model
-        </Button>
-      </div>
-
-      <div className="flex gap-3">
-        <Button variant="outline" className="rounded-full border-gray-200">All Models</Button>
-        <Button variant="outline" className="rounded-full border-gray-200">Body Type</Button>
-        <Button variant="outline" className="rounded-full border-gray-200">Ethnicity</Button>
-        <Button variant="outline" className="rounded-full border-gray-200">Pose Style</Button>
-      </div>
-
-      <div className="grid grid-cols-3 gap-6">
-        {models.map((model) => (
-          <div key={model.id} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all cursor-pointer">
-            <div className="aspect-[3/4] bg-gray-100 relative overflow-hidden">
-              <img src={model.image} alt={model.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button className="w-full rounded-full bg-white text-gray-900 hover:bg-gray-100">
-                  <Users className="w-4 h-4 mr-2" /> Use Model
-                </Button>
-              </div>
-            </div>
-            <div className="p-4">
-              <h3 className="font-semibold mb-1">{model.name}</h3>
-              <div className="flex gap-2">
-                <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">{model.ethnicity}</span>
-                <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">{model.bodyType}</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// Background Tab
-function BackgroundTab() {
-  const backgrounds = [
-    { id: 1, name: "Pure White", type: "solid", preview: "#ffffff" },
-    { id: 2, name: "Light Gray", type: "solid", preview: "#f5f5f5" },
-    { id: 3, name: "Studio", type: "gradient", preview: "linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 100%)" },
-    { id: 4, name: "Lifestyle", type: "scene", preview: "https://ext.same-assets.com/2206706892/1993143932.jpeg" },
-    { id: 5, name: "Urban", type: "scene", preview: "https://ext.same-assets.com/2206706892/2095848760.jpeg" },
-    { id: 6, name: "Nature", type: "scene", preview: "https://ext.same-assets.com/2206706892/2840946787.jpeg" },
-  ]
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-serif">Background Studio</h1>
-          <p className="text-gray-500">Remove, replace, or generate backgrounds for your products</p>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-8">
-          <div className="bg-white rounded-2xl border border-gray-100 p-6">
-            <div className="aspect-video bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center cursor-pointer hover:border-gray-300 transition-colors">
-              <div className="text-center">
-                <Upload className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                <p className="font-medium mb-1">Drop your product image here</p>
-                <p className="text-sm text-gray-400">PNG, JPG up to 50MB</p>
-              </div>
-            </div>
-            <div className="flex gap-3 mt-4">
-              <Button className="flex-1 rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white">
-                <Eraser className="w-4 h-4 mr-2" /> Remove Background
-              </Button>
-              <Button variant="outline" className="flex-1 rounded-full border-gray-200">
-                <Wand2 className="w-4 h-4 mr-2" /> Generate Scene
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-span-4 space-y-4">
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-semibold mb-4">Background Presets</h3>
-            <div className="grid grid-cols-3 gap-2">
-              {backgrounds.map((bg) => (
-                <div
-                  key={bg.id}
-                  className="aspect-square rounded-lg cursor-pointer border-2 border-transparent hover:border-gray-300 transition-colors overflow-hidden"
-                  style={{ background: bg.type === 'scene' ? `url(${bg.preview}) center/cover` : bg.preview }}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-semibold mb-4">Custom Background</h3>
-            <Input placeholder="Describe your background..." className="rounded-xl border-gray-200 mb-3" />
-            <Button className="w-full rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white">
-              <Wand2 className="w-4 h-4 mr-2" /> Generate
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// Batch Edit Tab
-function BatchEditTab() {
-  const [selectedImages, setSelectedImages] = useState<number[]>([])
-  
-  const images = Array.from({ length: 8 }).map((_, i) => ({
-    id: i + 1,
-    name: `Product ${i + 1}`,
-    image: [
-      "https://ext.same-assets.com/2206706892/1993143932.jpeg",
-      "https://ext.same-assets.com/2206706892/2095848760.jpeg",
-      "https://ext.same-assets.com/2206706892/2840946787.jpeg",
-      "https://ext.same-assets.com/2206706892/3497204393.jpeg",
-    ][i % 4],
-  }))
-
-  const toggleSelect = (id: number) => {
-    setSelectedImages(prev => 
-      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
-    )
-  }
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-serif">Batch Edit</h1>
-          <p className="text-gray-500">Process multiple images at once</p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="rounded-full border-gray-200">
-            <Upload className="w-4 h-4 mr-2" /> Upload Images
-          </Button>
-          <Button 
-            className="rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white"
-            disabled={selectedImages.length === 0}
-          >
-            <Wand2 className="w-4 h-4 mr-2" /> Process {selectedImages.length > 0 ? `(${selectedImages.length})` : ''}
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex gap-3">
-        <Button 
-          variant={selectedImages.length === images.length ? "default" : "outline"} 
-          className="rounded-full border-gray-200"
-          onClick={() => setSelectedImages(selectedImages.length === images.length ? [] : images.map(i => i.id))}
-        >
-          {selectedImages.length === images.length ? 'Deselect All' : 'Select All'}
-        </Button>
-        <Separator orientation="vertical" className="h-9" />
-        <Button variant="outline" className="rounded-full border-gray-200">
-          <Eraser className="w-4 h-4 mr-2" /> Remove BG
-        </Button>
-        <Button variant="outline" className="rounded-full border-gray-200">
-          <Users className="w-4 h-4 mr-2" /> Add Model
-        </Button>
-        <Button variant="outline" className="rounded-full border-gray-200">
-          <Wand2 className="w-4 h-4 mr-2" /> Enhance
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-4 gap-4">
-        {images.map((img) => (
-          <div 
-            key={img.id} 
-            className={`group bg-white rounded-2xl overflow-hidden border-2 transition-all cursor-pointer ${
-              selectedImages.includes(img.id) ? 'border-[#1a1a1a]' : 'border-gray-100 hover:border-gray-200'
-            }`}
-            onClick={() => toggleSelect(img.id)}
-          >
-            <div className="aspect-square bg-gray-100 relative overflow-hidden">
-              <img src={img.image} alt={img.name} className="w-full h-full object-cover" />
-              <div className={`absolute top-3 left-3 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                selectedImages.includes(img.id) ? 'bg-[#1a1a1a] border-[#1a1a1a]' : 'bg-white/80 border-gray-300'
-              }`}>
-                {selectedImages.includes(img.id) && <Check className="w-4 h-4 text-white" />}
-              </div>
-            </div>
-            <div className="p-3">
-              <p className="text-sm font-medium truncate">{img.name}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// Assets Tab (replaces old Catalog)
-function AssetsTab() {
+// Catalog Tab
+function CatalogTab() {
   const catalogImages = [
     "https://ext.same-assets.com/2206706892/1993143932.jpeg",
     "https://ext.same-assets.com/2206706892/2095848760.jpeg",
@@ -867,11 +641,12 @@ function AssetsTab() {
     "https://ext.same-assets.com/2206706892/1882702108.jpeg",
   ]
   
-  const assets = Array.from({ length: 12 }).map((_, i) => ({
+  const garments = Array.from({ length: 12 }).map((_, i) => ({
     id: i + 1,
     name: ["Blue Blouse", "Pink Bag", "Red Skirt", "Summer Dress", "Casual Top", "Denim Jacket", "Floral Dress", "White Tee", "Blazer", "Slim Jeans", "Cardigan", "Maxi Dress"][i],
     category: ["Tops", "Accessories", "Bottoms", "Dresses", "Tops", "Outerwear", "Dresses", "Tops", "Outerwear", "Bottoms", "Tops", "Dresses"][i],
-    type: ["Original", "Generated", "Original", "Generated", "Original", "Generated", "Original", "Generated", "Original", "Generated", "Original", "Generated"][i],
+    status: ["active", "active", "active", "processing", "active", "active", "active", "active", "processing", "active", "active", "active"][i],
+    tryOns: Math.floor(Math.random() * 1000) + 100,
     image: catalogImages[i % catalogImages.length],
   }))
 
@@ -879,137 +654,44 @@ function AssetsTab() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-serif">Asset Library</h1>
-          <p className="text-gray-500">All your product images and generated content</p>
+          <h1 className="text-2xl font-serif">Garment Catalog</h1>
+          <p className="text-gray-500">Manage your product catalog for virtual try-on</p>
         </div>
-        <Button className="gap-2 rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white">
-          <Upload className="w-4 h-4" /> Upload Assets
-        </Button>
+        <Button className="gap-2 rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white"><Plus className="w-4 h-4" /> Add Garment</Button>
       </div>
 
       <div className="flex items-center gap-4">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <Input placeholder="Search assets..." className="pl-9 rounded-xl bg-white border-gray-200" />
+          <Input placeholder="Search garments..." className="pl-9 rounded-xl bg-white border-gray-200" />
         </div>
-        <Button variant="outline" className="rounded-full border-gray-200">All Types</Button>
-        <Button variant="outline" className="rounded-full border-gray-200">Categories</Button>
-        <Button variant="outline" className="rounded-full border-gray-200">Date</Button>
+        <Button variant="outline" className="rounded-full border-gray-200">All Categories</Button>
+        <Button variant="outline" className="rounded-full border-gray-200">Status</Button>
       </div>
 
       <div className="grid grid-cols-4 gap-5">
-        {assets.map((asset) => (
-          <div key={asset.id} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 transition-colors">
+        {garments.map((garment) => (
+          <div key={garment.id} className="group bg-white rounded-2xl overflow-hidden shadow-none border border-gray-100 hover:border-gray-200 transition-colors">
             <div className="aspect-square bg-gray-100 relative overflow-hidden">
-              <img src={asset.image} alt={asset.name} className="w-full h-full object-cover" />
+              <img src={garment.image} alt={garment.name} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                 <Button size="icon" className="rounded-full bg-white text-gray-900 hover:bg-gray-100"><Eye className="w-4 h-4" /></Button>
-                <Button size="icon" className="rounded-full bg-white text-gray-900 hover:bg-gray-100"><Download className="w-4 h-4" /></Button>
+                <Button size="icon" className="rounded-full bg-white text-gray-900 hover:bg-gray-100"><Wand2 className="w-4 h-4" /></Button>
                 <Button size="icon" className="rounded-full bg-white text-gray-900 hover:bg-gray-100"><Trash2 className="w-4 h-4" /></Button>
               </div>
-              <span className={`absolute top-3 right-3 text-xs px-2 py-1 rounded-full font-medium ${
-                asset.type === 'Generated' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
-              }`}>
-                {asset.type}
+              <span className={`absolute top-3 right-3 text-xs px-2 py-1 rounded-full font-medium ${garment.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                {garment.status}
               </span>
             </div>
             <div className="p-4">
-              <p className="font-medium truncate">{asset.name}</p>
-              <span className="text-sm text-gray-400">{asset.category}</span>
+              <p className="font-medium truncate">{garment.name}</p>
+              <div className="flex items-center justify-between mt-1">
+                <span className="text-sm text-gray-400">{garment.category}</span>
+                <span className="text-sm text-gray-400">{garment.tryOns} try-ons</span>
+              </div>
             </div>
           </div>
         ))}
-      </div>
-    </div>
-  )
-}
-
-// Brand Kit Tab
-function BrandKitTab() {
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-serif">Brand Kit</h1>
-          <p className="text-gray-500">Maintain consistency across all your product visuals</p>
-        </div>
-        <Button className="gap-2 rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white">
-          Save Changes
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl p-6 border border-gray-100">
-          <h3 className="font-semibold mb-4">Brand Colors</h3>
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm text-gray-600 mb-2 block">Primary Color</label>
-              <div className="flex gap-3">
-                <div className="w-12 h-12 bg-[#1a1a1a] rounded-xl cursor-pointer hover:ring-2 ring-offset-2 ring-gray-300 transition-all" />
-                <Input defaultValue="#1a1a1a" className="flex-1 rounded-xl border-gray-200" />
-              </div>
-            </div>
-            <div>
-              <label className="text-sm text-gray-600 mb-2 block">Secondary Color</label>
-              <div className="flex gap-3">
-                <div className="w-12 h-12 bg-gray-500 rounded-xl cursor-pointer hover:ring-2 ring-offset-2 ring-gray-300 transition-all" />
-                <Input defaultValue="#6b7280" className="flex-1 rounded-xl border-gray-200" />
-              </div>
-            </div>
-            <div>
-              <label className="text-sm text-gray-600 mb-2 block">Accent Color</label>
-              <div className="flex gap-3">
-                <div className="w-12 h-12 bg-blue-500 rounded-xl cursor-pointer hover:ring-2 ring-offset-2 ring-gray-300 transition-all" />
-                <Input defaultValue="#3b82f6" className="flex-1 rounded-xl border-gray-200" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-6 border border-gray-100">
-          <h3 className="font-semibold mb-4">Brand Logo</h3>
-          <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gray-300 transition-colors cursor-pointer">
-            <Upload className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-            <p className="font-medium mb-1">Upload your logo</p>
-            <p className="text-sm text-gray-400">SVG, PNG recommended</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-6 border border-gray-100">
-          <h3 className="font-semibold mb-4">Photography Style</h3>
-          <div className="space-y-3">
-            {["Clean & Minimal", "Lifestyle", "Editorial", "Custom"].map((style, i) => (
-              <div 
-                key={style}
-                className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                  i === 0 ? 'border-[#1a1a1a] bg-gray-50' : 'border-gray-100 hover:border-gray-200'
-                }`}
-              >
-                <p className="font-medium">{style}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-6 border border-gray-100">
-          <h3 className="font-semibold mb-4">Export Presets</h3>
-          <div className="space-y-3">
-            {[
-              { name: "Shopify", size: "2048x2048", format: "PNG" },
-              { name: "Amazon", size: "1500x1500", format: "JPEG" },
-              { name: "Instagram", size: "1080x1080", format: "JPEG" },
-              { name: "Website", size: "1200x1600", format: "WebP" },
-            ].map((preset) => (
-              <div key={preset.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
-                <div>
-                  <p className="font-medium">{preset.name}</p>
-                  <p className="text-xs text-gray-400">{preset.size} • {preset.format}</p>
-                </div>
-                <Button variant="ghost" size="sm" className="rounded-lg">Edit</Button>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   )
