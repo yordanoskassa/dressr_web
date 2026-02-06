@@ -1,0 +1,8 @@
+export { Navbar } from "./Navbar"
+export { Hero } from "./Hero"
+export { AppShowcase } from "./AppShowcase"
+export { Features } from "./Features"
+export { About } from "./About"
+export { Founder } from "./Founder"
+export { CTA } from "./CTA"
+export { Footer } from "./Footer"

@@ -40,29 +40,43 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fafafa] flex items-center justify-center px-6">
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 justify-center mb-8">
-          <div className="w-10 h-10 bg-[#1a1a1a] rounded-xl flex items-center justify-center">
-            <span className="text-white font-sign text-lg">d</span>
-          </div>
-          <span className="font-sign text-2xl">dressr</span>
-        </Link>
+    <div className="min-h-screen bg-white flex">
+      {/* Left - Image */}
+      <div className="hidden lg:block lg:w-1/2 relative bg-gray-100">
+        <img
+          src="https://ext.same-assets.com/2206706892/3497204393.jpeg"
+          alt="Fashion"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="absolute bottom-8 left-8 right-8">
+          <p className="text-white text-sm font-medium">AI-powered virtual try-on</p>
+        </div>
+      </div>
 
-        {/* Card */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          <h1 className="text-2xl font-serif text-center mb-2">
+      {/* Right - Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12">
+        <div className="w-full max-w-sm">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 mb-10">
+            <div className="w-9 h-9 bg-black rounded-xl flex items-center justify-center">
+              <span className="text-white font-sign text-base">d</span>
+            </div>
+            <span className="font-sign text-xl">dressr</span>
+          </Link>
+
+          {/* Header */}
+          <h1 className="text-3xl font-serif mb-2">
             {isLogin ? 'Welcome back' : 'Create account'}
           </h1>
-          <p className="text-gray-500 text-center mb-6">
-            {isLogin ? 'Sign in to your account' : 'Get started with dressr'}
+          <p className="text-gray-500 mb-8">
+            {isLogin ? 'Sign in to continue' : 'Get started with dressr'}
           </p>
 
           {/* Google Sign In */}
           <Button
             variant="outline"
-            className="w-full rounded-full border-gray-200 mb-4 gap-2"
+            className="w-full rounded-full border-gray-200 h-11 gap-2"
             onClick={loginWithGoogle}
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -88,10 +102,10 @@ export default function Login() {
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200" />
+              <div className="w-full border-t border-gray-100" />
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">or</span>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-3 bg-white text-gray-400">or</span>
             </div>
           </div>
 
@@ -104,43 +118,43 @@ export default function Login() {
             )}
 
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Email</label>
+              <label className="text-sm text-gray-600 mb-1.5 block">Email</label>
               <Input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="rounded-xl border-gray-200"
+                className="rounded-xl border-gray-200 h-11"
                 required
               />
             </div>
 
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Password</label>
+              <label className="text-sm text-gray-600 mb-1.5 block">Password</label>
               <Input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="rounded-xl border-gray-200"
+                className="rounded-xl border-gray-200 h-11"
                 required
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full rounded-full bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white"
+              className="w-full rounded-full bg-black hover:bg-gray-900 text-white h-11"
               disabled={loading}
             >
               {loading ? 'Loading...' : isLogin ? 'Sign in' : 'Create account'}
             </Button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
+          <p className="text-center text-sm text-gray-500 mt-8">
             {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="text-[#1a1a1a] font-medium hover:underline"
+              className="text-black font-medium hover:underline"
             >
               {isLogin ? 'Sign up' : 'Sign in'}
             </button>
