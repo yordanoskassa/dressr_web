@@ -4,14 +4,15 @@ export function Footer() {
   return (
     <footer className="border-t border-gray-100 py-16 px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-2.5 mb-10">
-          <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-            <span className="text-white font-sign text-sm">d</span>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8 mb-14">
+          <div className="flex flex-col justify-start">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                <span className="text-white font-sign text-sm">d</span>
+              </div>
+              <span className="font-sign text-xl">dressr</span>
+            </div>
           </div>
-          <span className="font-sign text-xl">dressr</span>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-14">
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">Products</h4>
             <ul className="space-y-3">
@@ -57,10 +58,10 @@ export function Footer() {
           <p className="text-s text-gray-400">© 2025 dressr. All rights reserved.</p>
           <div className="flex items-center gap-3">
             <a href="https://www.instagram.com/dressrdotapp/" target="_blank" rel="noopener noreferrer">
-              <img src="/instagram-logo-facebook-2-svgrepo-com.svg" alt="Instagram" className="w-4 h-4 opacity-40 hover:opacity-100 transition-opacity" />
+              <img src="/instagram-logo-facebook-2-svgrepo-com.svg" alt="Instagram" className="w-8 h-8 opacity-40 hover:opacity-100 transition-opacity" />
             </a>
             <a href="https://www.linkedin.com/company/dressrai/" target="_blank" rel="noopener noreferrer">
-              <img src="/icons8-linkedin.svg" alt="LinkedIn" className="w-4 h-4 opacity-40 hover:opacity-100 transition-opacity" />
+              <img src="/icons8-linkedin.svg" alt="LinkedIn" className="w-8 h-8 opacity-40 hover:opacity-100 transition-opacity" />
             </a>
           </div>
         </div>
