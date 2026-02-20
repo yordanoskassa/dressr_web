@@ -21,14 +21,14 @@ export function Navbar() {
             href="https://apps.apple.com/us/app/dressr-virtual-fittting-room/id6744236444" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium"
+            className="text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium px-3 py-2.5 rounded-full hover:bg-gray-100/80"
           >
             iOS App
           </a>
 
           <Link 
             to="/login" 
-            className="text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium"
+            className="text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium px-3 py-2.5 rounded-full hover:bg-gray-100/80"
           >
             Web App
           </Link>
@@ -37,7 +37,7 @@ export function Navbar() {
             href="https://apps.shopify.com/search?q=dressr" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium"
+            className="text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium px-3 py-2.5 rounded-full hover:bg-gray-100/80"
           >
             Shopify
           </a>
@@ -48,7 +48,7 @@ export function Navbar() {
             onMouseEnter={() => setOpenDropdown('solutions')}
             onMouseLeave={() => setOpenDropdown(null)}
           >
-            <button className="flex items-center gap-1.5 text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium py-2">
+            <button className="flex items-center gap-1.5 text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium px-3 py-2.5 rounded-full hover:bg-gray-100/80">
               Solutions
               <ChevronDown className="w-3.5 h-3.5" />
             </button>
