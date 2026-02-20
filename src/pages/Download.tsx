@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Link, useNavigate } from "react-router-dom"
 import { ArrowLeft, ShoppingBag } from "lucide-react"
 import { useState } from "react"
+import { Footer } from "@/components/landing/Footer"
 
 export default function Download() {
   const navigate = useNavigate()
@@ -137,10 +138,7 @@ export default function Download() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="py-6 text-center text-gray-400 text-sm">
-        © {new Date().getFullYear()} dressr. All rights reserved.
-      </footer>
+      <Footer />
     </div>
   )
 }

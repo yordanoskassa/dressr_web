@@ -14,41 +14,41 @@ export function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">Products</h4>
+            <h4 className="text-sm font-semibold text-gray-900 mb-4">Products</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-sm text-gray-600 hover:text-black transition-colors">App</a></li>
-              <li><a href="#" className="text-sm text-gray-600 hover:text-black transition-colors">API</a></li>
+              <li><a href="#" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">App</a></li>
+              <li><a href="#" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">API</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">Tools</h4>
+            <h4 className="text-sm font-semibold text-gray-900 mb-4">Tools</h4>
             <ul className="space-y-3">
-              <li><Link to="/tools/virtual-try-on" className="text-sm text-gray-600 hover:text-black transition-colors">Virtual Try-On</Link></li>
-              <li><Link to="/tools/product-to-model" className="text-sm text-gray-600 hover:text-black transition-colors">Product to Model</Link></li>
-              <li><Link to="/tools/model-swap" className="text-sm text-gray-600 hover:text-black transition-colors">Model Swap</Link></li>
+              <li><Link to="/tools/virtual-try-on" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Virtual Try-On</Link></li>
+              <li><Link to="/tools/product-to-model" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Product to Model</Link></li>
+              <li><Link to="/tools/model-swap" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Model Swap</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">Solutions</h4>
+            <h4 className="text-sm font-semibold text-gray-900 mb-4">Solutions</h4>
             <ul className="space-y-3">
-              <li><Link to="/solutions/photoshoots" className="text-sm text-gray-600 hover:text-black transition-colors">Photoshoots</Link></li>
-              <li><Link to="/solutions/fitting-rooms" className="text-sm text-gray-600 hover:text-black transition-colors">Fitting Rooms</Link></li>
+              <li><Link to="/solutions/photoshoots" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Photoshoots</Link></li>
+              <li><Link to="/solutions/fitting-rooms" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Fitting Rooms</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">Resources</h4>
+            <h4 className="text-sm font-semibold text-gray-900 mb-4">Resources</h4>
             <ul className="space-y-3">
-              <li><Link to="/resources/api-docs" className="text-sm text-gray-600 hover:text-black transition-colors">API Docs</Link></li>
-              <li><Link to="/resources/help-center" className="text-sm text-gray-600 hover:text-black transition-colors">Help Center</Link></li>
-              <li><Link to="/resources/pricing" className="text-sm text-gray-600 hover:text-black transition-colors">Pricing</Link></li>
+              <li><Link to="/resources/api-docs" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">API Docs</Link></li>
+              <li><Link to="/resources/help-center" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Help Center</Link></li>
+              <li><Link to="/resources/pricing" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Pricing</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">Company</h4>
+            <h4 className="text-sm font-semibold text-gray-900 mb-4">Company</h4>
             <ul className="space-y-3">
-              <li><Link to="/company/about" className="text-sm text-gray-600 hover:text-black transition-colors">About</Link></li>
-              <li><Link to="/company/blog" className="text-sm text-gray-600 hover:text-black transition-colors">Blog</Link></li>
-              <li><Link to="/company/careers" className="text-sm text-gray-600 hover:text-black transition-colors">Careers</Link></li>
+              <li><Link to="/company/about" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">About</Link></li>
+              <li><Link to="/company/blog" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Blog</Link></li>
+              <li><Link to="/company/careers" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Careers</Link></li>
             </ul>
           </div>
           

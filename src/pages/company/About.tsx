@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { ArrowLeft, Sparkles, Target, Leaf, Users } from "lucide-react"
+import { Footer } from "@/components/landing/Footer"
 
 export default function About() {
   return (
@@ -124,18 +125,7 @@ export default function About() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-8 px-6">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
-              <span className="text-white font-sign text-sm">d</span>
-            </div>
-            <span className="font-sign text-xl">dressr</span>
-          </div>
-          <p className="text-sm text-gray-500">© 2025 dressr. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

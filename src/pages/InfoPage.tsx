@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { ChevronRight, ArrowLeft } from "lucide-react"
 import { Link } from "react-router-dom"
+import { Footer } from "@/components/landing/Footer"
 
 interface InfoPageProps {
   title: string
@@ -58,68 +59,7 @@ export default function InfoPage({ title, subtitle, content }: InfoPageProps) {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
-            <div>
-              <h4 className="font-semibold mb-4">Products</h4>
-              <ul className="space-y-3 text-gray-600">
-                <li><Link to="/dashboard" className="hover:text-gray-900 transition-colors">App</Link></li>
-                <li><Link to="/resources/api-docs" className="hover:text-gray-900 transition-colors">API</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Tools</h4>
-              <ul className="space-y-3 text-gray-600">
-                <li><Link to="/tools/virtual-try-on" className="hover:text-gray-900 transition-colors">Virtual Try-On</Link></li>
-                <li><Link to="/tools/product-to-model" className="hover:text-gray-900 transition-colors">Product to Model</Link></li>
-                <li><Link to="/tools/model-swap" className="hover:text-gray-900 transition-colors">Model Swap</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Solutions</h4>
-              <ul className="space-y-3 text-gray-600">
-                <li><Link to="/solutions/photoshoots" className="hover:text-gray-900 transition-colors">Photoshoots</Link></li>
-                <li><Link to="/solutions/fitting-rooms" className="hover:text-gray-900 transition-colors">Fitting Rooms</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
-              <ul className="space-y-3 text-gray-600">
-                <li><Link to="/resources/api-docs" className="hover:text-gray-900 transition-colors">API Docs</Link></li>
-                <li><Link to="/resources/help-center" className="hover:text-gray-900 transition-colors">Help Center</Link></li>
-                <li><Link to="/resources/pricing" className="hover:text-gray-900 transition-colors">Pricing</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-3 text-gray-600">
-                <li><Link to="/company/about" className="hover:text-gray-900 transition-colors">About</Link></li>
-                <li><Link to="/company/blog" className="hover:text-gray-900 transition-colors">Blog</Link></li>
-                <li><Link to="/company/careers" className="hover:text-gray-900 transition-colors">Careers</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Social</h4>
-              <ul className="space-y-3 text-gray-600">
-                <li><a href="https://www.instagram.com/dressrdotapp/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors">Instagram</a></li>
-                <li><a href="https://www.linkedin.com/company/dressrai/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors">LinkedIn</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
-                <span className="text-white font-sign text-sm">d</span>
-              </div>
-              <span className="font-sign text-xl">dressr</span>
-            </Link>
-            <p className="text-sm text-gray-500">© 2025 dressr. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
